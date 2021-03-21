@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom'
-
+import { NavLink } from 'react-router-dom'
 import Col from 'react-bootstrap/Col'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav';
@@ -11,7 +10,8 @@ const Navigation = () => {
         <Col>
             <Navbar bg="light" expand="lg">
                 <Navbar.Brand >
-                    <img src="nhl_logo.png"
+                    {/* <img src="./kuvat/nhl_logo.png" */}
+                    <img src={window.location.origin + '/kuvat/nhl_logo.png'} 
                     width="70"
                     height="70"
                     className="d-inline-block align-top"

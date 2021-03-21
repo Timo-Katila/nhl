@@ -5,10 +5,14 @@ import {
   Route,
   Link
 } from "react-router-dom";
+
+//Compomemt imports
 import Container from 'react-bootstrap/Container/'
 import Navigation from './components/Navigation';
 import Etusivu from './components/Etusivu';
-import Sarjataulukko from './components/sarjataulukko/Sarjataulukko'
+import Sarjataulukko from './components/sarjataulukko/Sarjataulukko';
+import Joukkuetilasto from './components/joukkuetilastot/Joukkuetilasto';
+
 
 
 //Axios, router asennettu
@@ -20,10 +24,17 @@ const App = () =>  {
       <Router>
      
         <Navigation/>
-        <Route exact path="/" component={Etusivu}/>
-        <Route exact path="/sarjataulukko" component={Sarjataulukko}/>
-      
+        
+        <Switch>
+          <Route exact path="/" component={Etusivu}/>
+          <Route exact path="/sarjataulukko" component={Sarjataulukko}/>
+          <Route path="/sarjataulukko/:id" component={Joukkuetilasto}/>
+            
+        
+        </Switch>
       </Router>
+
+      
      
     </Container>
     

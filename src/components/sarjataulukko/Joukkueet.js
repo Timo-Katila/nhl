@@ -1,17 +1,21 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom';
+
 
 import Col from 'react-bootstrap/Col'
 import Table from 'react-bootstrap/Table';
 
 const Joukkueet = ({joukkueet, divisioona}) => {
     
-    console.log(joukkueet)
     const renderedData  = joukkueet.map((joukkue) => {
-        
+         
         return(
             
-            <tr key={joukkue.team.name}>
-                <td>{joukkue.divisionRank}. {joukkue.team.name}</td>
+            <tr className="bg-light" key={joukkue.team.id}>
+                
+                <td>{joukkue.divisionRank}.
+                    <NavLink to={`/sarjataulukko/${joukkue.team.id}`}> {joukkue.team.name}</NavLink>
+                </td>
                 <td>{joukkue.gamesPlayed}</td>
                 <td>{joukkue.leagueRecord.wins}</td>
                 <td>{joukkue.leagueRecord.ot}</td>
@@ -26,7 +30,7 @@ const Joukkueet = ({joukkueet, divisioona}) => {
    
     return (
         <Col>
-            <Table responsive>
+            <Table key="joo" responsive>
                 <thead className="thead-dark">
                     <tr className="text-center">
                         <th scope="col" colSpan="12">{divisioona}</th>
@@ -47,9 +51,7 @@ const Joukkueet = ({joukkueet, divisioona}) => {
                     {renderedData}
                 </tbody>
             </Table>
-      
         </Col>
-
     );
 };
 

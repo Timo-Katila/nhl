@@ -1,13 +1,14 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import Joukkueet from './Joukkueet';
 import NhlApi from '../api/NhlApi';
 
+//Bootstap imports
 import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
 import Table from 'react-bootstrap/Table';
 
 const Sarjataulukko = () => {
-    
+        
     const [divisions, setDivisions] = useState({
         central : [],
         east : [],
@@ -18,28 +19,32 @@ const Sarjataulukko = () => {
     });
 
     useEffect(() => {
-        const haeData = async () => {
+
+        let isMounted = true;
+
+        if (isMounted === true) {
+
+            const haeData = async () => {
             
-            try {
-                const apiResponse = await NhlApi.get(`standings`)
-                setDivisions({...divisions,
-                    central : apiResponse.data.records[0].teamRecords,
-                    east :  apiResponse.data.records[1].teamRecords,
-                    west :  apiResponse.data.records[2].teamRecords,
-                    north : apiResponse.data.records[3].teamRecords,
-                    ladataan : false
-                })
-            }
-            catch(err) {
-                setDivisions({...divisions, virhe : "Tietokantaan ei saada yhteyttä!"})
+                try {
+                    const apiResponse = await NhlApi.get(`standings`)
+                    setDivisions({...divisions,
+                        central : apiResponse.data.records[0].teamRecords,
+                        east :  apiResponse.data.records[1].teamRecords,
+                        west :  apiResponse.data.records[2].teamRecords,
+                        north : apiResponse.data.records[3].teamRecords,
+                        ladataan : false
+                    })
+                }
+                catch(err) {
+                    setDivisions({...divisions, virhe : "Tietokantaan ei saada yhteyttä!"})
+                };
             };
-        };
-        haeData();  
-       
-    
-    },[])
- 
-    console.log(divisions)
+            haeData();  
+        }
+        return () => {isMounted = false};
+    },[divisions]);
+         
     return(
           
         <React.Fragment>
@@ -48,7 +53,7 @@ const Sarjataulukko = () => {
                 ?
                   <Alert variant="danger" className="mt-4"> {divisions.virhe} </Alert>
                 :
-                    [<React.Fragment>
+                    [<React.Fragment key="Sarjataulukko">
                         <Col className="text-center mt-3"><h2>Sarjataulukko</h2></Col>
                         <Joukkueet divisioona={"Discover Central"} joukkueet={divisions.central} />
                         <Joukkueet divisioona={"MassMutual East"} joukkueet={divisions.east}/>
