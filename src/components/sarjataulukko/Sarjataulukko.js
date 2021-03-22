@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Joukkueet from './Joukkueet';
+import Axios from 'axios';
 import NhlApi from '../api/NhlApi';
 
 //Bootstap imports
@@ -20,14 +21,12 @@ const Sarjataulukko = () => {
 
     useEffect(() => {
 
-        let isMounted = true;
+        const source = Axios.CancelToken.source();
 
-        if (isMounted === true) {
-
-            const haeData = async () => {
+        const haeData = async () => {
             
-                try {
-                    const apiResponse = await NhlApi.get(`standings`)
+            try {
+                    const apiResponse = await NhlApi.get(`standings`,{cancelToken: source.token})
                     setDivisions({...divisions,
                         central : apiResponse.data.records[0].teamRecords,
                         east :  apiResponse.data.records[1].teamRecords,
@@ -35,15 +34,20 @@ const Sarjataulukko = () => {
                         north : apiResponse.data.records[3].teamRecords,
                         ladataan : false
                     })
+            }
+            catch(err) {
+                if (Axios.isCancel(err)) {
+                    console.log(err)
                 }
-                catch(err) {
+                else {
                     setDivisions({...divisions, virhe : "Tietokantaan ei saada yhteyttä!"})
                 };
             };
-            haeData();  
-        }
-        return () => {isMounted = false};
-    },[divisions]);
+        };
+        haeData();  
+        
+        return () => { source.cancel()};
+    },[]);
          
     return(
           

@@ -1,7 +1,5 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-
-
 import Col from 'react-bootstrap/Col'
 import Table from 'react-bootstrap/Table';
 

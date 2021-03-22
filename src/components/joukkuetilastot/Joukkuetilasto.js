@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
+import Axios from 'axios';
 import NhlApi from '../api/NhlApi';
 import Joukkue from './Joukkue';
 import Alert from 'react-bootstrap/Alert';
@@ -17,28 +18,31 @@ const Joukkuetilasto = () => {
 
     useEffect(() => {
         
-        let isMounted = true;
-        
-        if (isMounted === true) {
-
-            const haeData = async () => {
-                try {
+        const source = Axios.CancelToken.source();
+    
+        const haeData = async () => {
+            try {
              
-                    const apiResponse = await NhlApi.get(apiUrl)
-                    setJoukkuetilastot({...joukkuetilastot,
-                        joukkue : apiResponse.data.stats[0].splits[0].team.name,
-                        tilastot : apiResponse.data.stats[0].splits[0].stat,
-                        tilastotRanking : apiResponse.data.stats[1].splits[0].stat
-                    })
+                const apiResponse = await NhlApi.get(apiUrl, {cancelToken: source.token})
+                setJoukkuetilastot({...joukkuetilastot,
+                    joukkue : apiResponse.data.stats[0].splits[0].team.name,
+                    tilastot : apiResponse.data.stats[0].splits[0].stat,
+                    tilastotRanking : apiResponse.data.stats[1].splits[0].stat
+                })
+            }
+           catch(err) {
+                if (Axios.isCancel(err)) {
+                    console.log(err)
                 }
-                catch(err) {
+                else { 
                     setJoukkuetilastot({...joukkuetilastot, virhe : "Tietokantaan ei saada yhteyttä!"})
-                };
+                }    
             };
-            haeData()
-        }
-        return () => { isMounted = false }
-    },[joukkuetilastot, apiUrl]);
+        };
+        haeData()
+        
+        return () => { source.cancel(); }
+    },[apiUrl]);
     
     return(
            
