@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Joukkueet from './Joukkueet';
-import Axios from 'axios';
 import NhlApi from '../api/NhlApi';
 
 //Bootstap imports
@@ -21,32 +20,23 @@ const Sarjataulukko = () => {
 
     useEffect(() => {
 
-        const source = Axios.CancelToken.source();
-
         const haeData = async () => {
             
             try {
-                    const apiResponse = await NhlApi.get(`standings`,{cancelToken: source.token})
-                    setDivisions({...divisions,
-                        central : apiResponse.data.records[0].teamRecords,
-                        east :  apiResponse.data.records[1].teamRecords,
-                        west :  apiResponse.data.records[2].teamRecords,
-                        north : apiResponse.data.records[3].teamRecords,
-                        ladataan : false
-                    })
+                const apiResponse = await NhlApi.get(`standings`)
+                setDivisions(divisionsData => ({...divisionsData,
+                    central : apiResponse.data.records[0].teamRecords,
+                    east :  apiResponse.data.records[1].teamRecords,
+                    west :  apiResponse.data.records[2].teamRecords,
+                    north : apiResponse.data.records[3].teamRecords,
+                    ladataan : false
+                }))
             }
             catch(err) {
-                if (Axios.isCancel(err)) {
-                    console.log(err)
-                }
-                else {
-                    setDivisions({...divisions, virhe : "Tietokantaan ei saada yhteyttä!"})
-                };
+                setDivisions(divisionsData => ({...divisionsData, virhe : "Tietokantaan ei saada yhteyttä!"}))
             };
         };
         haeData();  
-        
-        return () => { source.cancel()};
     },[]);
          
     return(
