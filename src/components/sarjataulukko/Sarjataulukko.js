@@ -38,7 +38,7 @@ const Sarjataulukko = () => {
         };
         haeData();  
     },[]);
-         
+    
     return(
           
         <React.Fragment>

@@ -33,7 +33,7 @@ const Joukkuetilasto = () => {
         };
         haeData()
     },[apiUrl]);
-    
+   
     return(
            
         <React.Fragment>
@@ -43,7 +43,7 @@ const Joukkuetilasto = () => {
                   <Alert variant="danger" className="mt-4"> {joukkuetilastot.virhe} </Alert>
                 :
                     [<React.Fragment key="Sarjataulukko">
-                        <Joukkue joukkuetilastot={joukkuetilastot} />
+                        <Joukkue joukkuetilastot={joukkuetilastot}/>
                     </React.Fragment>]
             }
         </React.Fragment>
