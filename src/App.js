@@ -12,6 +12,7 @@ import Navigation from './components/Navigation';
 import Etusivu from './components/Etusivu';
 import Sarjataulukko from './components/sarjataulukko/Sarjataulukko';
 import Joukkuetilasto from './components/joukkuetilastot/Joukkuetilasto';
+import Joukkueet from './components/joukkueet/Joukkueet';
 
 
 
@@ -28,7 +29,9 @@ const App = () =>  {
         <Switch>
           <Route exact path="/" component={Etusivu}/>
           <Route exact path="/sarjataulukko" component={Sarjataulukko}/>
+          <Route exact path="/joukkueet" component={Joukkueet}/>
           <Route path="/sarjataulukko/:id" component={Joukkuetilasto}/>
+         
             
         
         </Switch>

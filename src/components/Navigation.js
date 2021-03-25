@@ -26,6 +26,9 @@ const Navigation = () => {
                         <NavLink className="nav-link" to="/sarjataulukko">
                             Sarjataulukko
                         </NavLink>
+                        <NavLink className="nav-link" to="/joukkueet">
+                            Joukkueet
+                        </NavLink>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
