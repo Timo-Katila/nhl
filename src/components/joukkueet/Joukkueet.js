@@ -54,7 +54,7 @@ const Joukkueet = () => {
     return (
         
         <React.Fragment>
-            <h3 className="text-center mt-3">Joukkeet</h3>
+            <h3 className="text-center mt-3">Joukkueet</h3>
             <Row className="testi text-center" >
                 {renderedData}
             </Row>
