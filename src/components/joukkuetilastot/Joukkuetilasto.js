@@ -33,7 +33,7 @@ const Joukkuetilasto = () => {
         };
         haeData()
     },[apiUrl]);
-   
+    
     return(
            
         <React.Fragment>
