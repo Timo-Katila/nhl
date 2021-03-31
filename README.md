@@ -1,3 +1,6 @@
+###
+Jatketaan kehitystä Nhl_English repossa
+
 ### Ajatuksia
 Käännetään koko homma Englanniksi, muuttujia myöten.
 Ulkoasua viilataan kun toiminnot on saatu valmiiksi. (<body> jäätaustakuva?) 
