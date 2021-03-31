@@ -1,6 +1,6 @@
 ###
 Jatketaan kehitystä Nhl_English repossa
-
+Vercel: https://nhl-english.vercel.app/
 ### Ajatuksia
 Käännetään koko homma Englanniksi, muuttujia myöten.
 Ulkoasua viilataan kun toiminnot on saatu valmiiksi. (<body> jäätaustakuva?) 
